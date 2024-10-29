@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.mood-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.mood-option {
+    cursor: pointer;
+    transition: transform 0.2s; /* Keep the original transition for hover effect */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90px; /* Set fixed width for consistency */
+    position: relative; /* Set position to relative for stacking context */
+}
+
+.mood-option:hover {
+    transform: scale(1.1);
+}
+
+.mood-option.selected {
+    transform: scale(1.2); /* Increase size when selected */
+    z-index: 1; /* Bring the selected option to the front */
+}
+
+.mood-option img {
+    width: 100%; /* Keep this to ensure it fills the width */
+    height: 100px; /* Set a fixed height */
+    object-fit: cover; /* This will maintain aspect ratio and cover the box */
+    border-radius: 8px;
+}
+
+.mood-option p {
+    margin: 10px 0 5px; /* Increase bottom margin to create more space */
+    font-size: 14px;
+    color: #333;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}

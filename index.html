@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+        </br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <div style="margin-top: 10px;">
+            <button type="submit">Login</button>
+        </div>
+        </form>
+        <p id="loginError" style="color:red;"></p>
+    </div>
+
+    <div class="container" id="moodTrackerContainer" style="display:none;">
+        <h1>Mood Tracker</h1>
+        <form id="moodForm">
+            <label for="mood">How are you feeling today?</label>
+            <div class="mood-options">
+                <div class="mood-option" data-value="happy">
+                    <img id="happy" alt="Happy Mood" />
+                    <p>Happy</p>
+                </div>
+                <div class="mood-option" data-value="neutral">
+                    <img id="neutral" alt="Neutral Mood" />
+                    <p>Neutral</p>
+                </div>
+                <div class="mood-option" data-value="sad">
+                    <img id="sad" alt="Sad Mood" />
+                    <p>Sad</p>
+                </div>
+            </div>
+
+                <button type="submit">Log Mood</button>
+
+        </form>
+        <div id="moodLog"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
