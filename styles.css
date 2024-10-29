@@ -14,7 +14,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 350px;
+    max-width: 600px; /* Increased width for more space */
     width: 100%;
 }
 
@@ -29,40 +29,40 @@ form {
 }
 
 .mood-options {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    display: grid; /* Changed to grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Responsive grid */
+    gap: 15px; /* Space between grid items */
     margin-bottom: 15px;
 }
 
 .mood-option {
     cursor: pointer;
-    transition: transform 0.2s; /* Keep the original transition for hover effect */
+    transition: transform 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90px; /* Set fixed width for consistency */
-    position: relative; /* Set position to relative for stacking context */
+    border: 2px solid transparent; /* Border for selection indication */
+    border-radius: 8px;
+    padding: 10px; /* Padding for better click area */
 }
 
 .mood-option:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .mood-option.selected {
-    transform: scale(1.2); /* Increase size when selected */
-    z-index: 1; /* Bring the selected option to the front */
+    border-color: #5cb85c; /* Highlight selected mood */
+    background-color: #e8f5e9; /* Slight background change on select */
 }
 
 .mood-option img {
-    width: 100%; /* Keep this to ensure it fills the width */
-    height: 100px; /* Set a fixed height */
-    object-fit: cover; /* This will maintain aspect ratio and cover the box */
+    width: 100%;
+    height: auto;
     border-radius: 8px;
 }
 
 .mood-option p {
-    margin: 10px 0 5px; /* Increase bottom margin to create more space */
+    margin: 8px 0 0;
     font-size: 14px;
     color: #333;
 }

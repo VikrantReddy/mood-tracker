@@ -1,32 +1,78 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-    const API_KEY = 'AIzaSyCu9jU0mU4T3q2NV5m2buYL7zuXQwW3szU'; // Replace with your actual Tenor API key
-    const DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1300865730757136454/GAPaHG7_8usiU4GuQ3Vq5IsXI0W9ZIk9fX7oC9SybVFqHrd3mtpCDEh7rIwfIKDYoFQz'; // Replace with your Discord webhook URL
-    const API_URL = 'https://tenor.googleapis.com/v2/search';
+    const moodsUrl = 'moods.json'; // Path to your moods JSON file
 
-    // Hardcoded credentials for two accounts
-    const accounts = [
-        { username: 'Cookie', password: 'viksbestf' }, // Change to your desired username and password
-        { username: 'Vikki', password: 'donttry' },  // Change to your desired username and password
-        { username: 'NotDummy', password: 'thisisnotforyou'}
-    ];
+    // Login credentials (hardcoded for demonstration purposes)
+    const users = { 'Cookie':'viksbestf', // Change to your desired username and password
+        'Vikki':'donttry' ,  // Change to your desired username and password
+        'NotDummy': 'thisisnotforyou'
+    }
+    ;
 
-    // Expanded base keywords for each mood
-    const keywords = {
-        happy: ['happy', 'joyful', 'excited', 'celebration', 'smile', 'funny happy', 'party'],
-        neutral: ['okay', 'meh', 'normal', 'neutral face', 'casual', 'bored', 'expressionless'],
-        sad: ['sad', 'down', 'unhappy', 'crying', 'disappointed', 'lonely', 'gloomy', 'tearful']
-    };
+    // Function to handle login
+    document.getElementById('loginForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-    // Modifiers to further increase diversity in search queries
-    const modifiers = ['disney character', 'cartoon', 'animation', 'kpop', 'hello kitty', 'sanrio'];
+        if (users[username] && users[username] === password) {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('moodTrackerContainer').style.display = 'block';
+            loadMoods();
+        } else {
+            document.getElementById('loginError').innerText = 'Invalid username or password.';
+        }
+    });
+
+    // Load moods dynamically
+    function loadMoods() {
+        fetch(moodsUrl)
+            .then(response => response.json())
+            .then(data => {
+                const moodOptionsContainer = document.getElementById('moodOptionsContainer');
+                data.moods.forEach(mood => {
+                    const moodOptionDiv = document.createElement('div');
+                    moodOptionDiv.classList.add('mood-option');
+                    moodOptionDiv.dataset.value = mood.value;
+
+                    const img = document.createElement('img');
+                    img.id = mood.value;
+                    img.alt = `${mood.value.charAt(0).toUpperCase() + mood.value.slice(1)} Mood`;
+                    moodOptionDiv.appendChild(img);
+
+                    const p = document.createElement('p');
+                    p.innerText = mood.value.charAt(0).toUpperCase() + mood.value.slice(1);
+                    moodOptionDiv.appendChild(p);
+
+                    moodOptionsContainer.appendChild(moodOptionDiv);
+                    
+                    // Fetch GIF for the mood using keywords from the JSON
+                    fetchGifForMood(mood.keywords, img.id); // Pass the keywords array
+
+                    // Add event listener for selection
+                    moodOptionDiv.addEventListener('click', () => {
+                        document.querySelectorAll('.mood-option').forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        moodOptionDiv.classList.add('selected');
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading moods:', error));
+    }
 
     // Function to fetch a random GIF for a dynamically generated search term
-    function fetchGifForMood(mood, elementId) {
-        const randomBaseKeyword = keywords[mood][Math.floor(Math.random() * keywords[mood].length)];
+    function fetchGifForMood(keywords, elementId) {
+        const randomBaseKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+        const modifiers = ['reaction', 'cartoon', 'animation', 'expression', 'mood', 'funny', 'face'];
         const randomModifier = modifiers[Math.floor(Math.random() * modifiers.length)];
+        const API_KEY = 'AIzaSyCu9jU0mU4T3q2NV5m2buYL7zuXQwW3szU'; // Replace with your actual Tenor API key
+        
         const searchQuery = `${randomBaseKeyword} ${randomModifier}`;
 
-        fetch(`${API_URL}?q=${encodeURIComponent(searchQuery)}&key=${API_KEY}&limit=1&random=true&media_filter=gif`)
+        const API_URL = 'https://tenor.googleapis.com/v2/search';
+        
+        fetch(`${API_URL}?q=${encodeURIComponent(searchQuery)}&limit=1&random=true&media_filter=gif&key=${API_KEY}`)
             .then(response => response.json())
             .then(data => {
                 if (data.results && data.results.length > 0) {
@@ -39,76 +85,41 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching GIF:', error));
     }
 
-    // Fetch random GIFs for each mood
-    fetchGifForMood('happy', 'happy');
-    fetchGifForMood('neutral', 'neutral');
-    fetchGifForMood('sad', 'sad');
-
-    // Function to send message to Discord via webhook
-    function sendMessageToDiscord(mood, username) {
-        const message = `${username} is feeling ${mood} today!`;
-
-        fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                content: message
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Message sent successfully to Discord:', message);
-            } else {
-                console.error('Error sending message to Discord:', response.statusText);
-            }
-        })
-        .catch(error => console.error('Error sending message to Discord:', error));
-    }
-
-    // Handle login form submission
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent form submission refresh
-        const usernameInput = document.getElementById('username').value;
-        const passwordInput = document.getElementById('password').value;
-
-        // Validate credentials
-        const userAccount = accounts.find(account => 
-            account.username === usernameInput && account.password === passwordInput
-        );
-
-        if (userAccount) {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('moodTrackerContainer').style.display = 'block';
-            // Store the current username for sending messages
-            window.currentUsername = userAccount.username; 
-        } else {
-            document.getElementById('loginError').innerText = 'Invalid username or password!';
-        }
-    });
-
-    // Handle mood selection
-    const moodOptions = document.querySelectorAll('.mood-option');
-    let selectedMood = '';
-
-    moodOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            moodOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            selectedMood = option.getAttribute('data-value');
-        });
-    });
-
-    // Handle mood log submission
-    const moodForm = document.getElementById('moodForm');
-    moodForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent form submission refresh
+    // Handle mood form submission
+    document.getElementById('moodForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const selectedMood = document.querySelector('.mood-option.selected');
+        
         if (selectedMood) {
-            sendMessageToDiscord(selectedMood, window.currentUsername); // Send selected mood to Discord
+            const moodValue = selectedMood.dataset.value;
+            const username = document.getElementById('username').value; // Get logged in username
+
+            // Send a message to Discord
+            const discordWebhookUrl = 'https://discordapp.com/api/webhooks/1300865730757136454/GAPaHG7_8usiU4GuQ3Vq5IsXI0W9ZIk9fX7oC9SybVFqHrd3mtpCDEh7rIwfIKDYoFQz'; // Replace with your Discord webhook URL
+            const message = {
+                content: `${username} is feeling ${moodValue} and wants you to know that 👉👈`
+            };
+
+            fetch(discordWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Mood logged successfully!');
+                    document.getElementById('moodLog').innerHTML += `<p>${username} logged mood: ${moodValue}</p>`;
+                } else {
+                    console.error('Error logging mood:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error sending Discord message:', error));
         } else {
             alert('Please select a mood before logging.');
         }
+
+        alert("We've informed your bestf, but maybe you can try texting as well, kinda does help them as well :3")
     });
 });

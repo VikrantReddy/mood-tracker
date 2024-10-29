@@ -7,46 +7,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container" id="loginContainer">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
-        </br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
-            <div style="margin-top: 10px;">
-            <button type="submit">Login</button>
-        </div>
-        </form>
-        <p id="loginError" style="color:red;"></p>
-    </div>
-
-    <div class="container" id="moodTrackerContainer" style="display:none;">
+    <div class="container">
         <h1>Mood Tracker</h1>
-        <form id="moodForm">
-            <label for="mood">How are you feeling today?</label>
-            <div class="mood-options">
-                <div class="mood-option" data-value="happy">
-                    <img id="happy" alt="Happy Mood" />
-                    <p>Happy</p>
+        <div id="loginContainer">
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Login</button>
+                <p id="loginError" style="color: red;"></p>
+            </form>
+        </div>
+        <div id="moodTrackerContainer" style="display: none;">
+            <form id="moodForm">
+                <label for="mood">How are you feeling today?</label>
+                <div class="mood-options" id="moodOptionsContainer">
+                    <!-- Mood options will be dynamically generated here -->
                 </div>
-                <div class="mood-option" data-value="neutral">
-                    <img id="neutral" alt="Neutral Mood" />
-                    <p>Neutral</p>
-                </div>
-                <div class="mood-option" data-value="sad">
-                    <img id="sad" alt="Sad Mood" />
-                    <p>Sad</p>
-                </div>
-            </div>
-
                 <button type="submit">Log Mood</button>
-
-        </form>
-        <div id="moodLog"></div>
+            </form>
+            <div id="moodLog"></div>
+        </div>
     </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
