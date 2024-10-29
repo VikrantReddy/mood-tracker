@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Modifiers to further increase diversity in search queries
-    const modifiers = ['disney character', 'cartoon', 'animation', 'kpop', 'hello kitty'];
+    const modifiers = ['disney character', 'cartoon', 'animation', 'kpop', 'hello kitty', 'sanrio'];
 
     // Function to fetch a random GIF for a dynamically generated search term
     function fetchGifForMood(mood, elementId) {
