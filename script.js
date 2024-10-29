@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    const moodsUrl = window.location.origin + '/moods.json'; // Path to your moods JSON file
+    const moodsUrl = window.location.href + 'moods.json'; // Path to your moods JSON file
 
     // Login credentials (hardcoded for demonstration purposes)
     const users = { 'Cookie':'viksbestf', // Change to your desired username and password
