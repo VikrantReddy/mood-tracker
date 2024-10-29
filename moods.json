@@ -1,0 +1,38 @@
+{
+    "moods": [
+        {
+            "value": "happy",
+            "keywords": ["happy", "joyful", "excited", "celebration", "smile", "funny happy", "party"]
+        },
+        {
+            "value": "neutral",
+            "keywords": ["okay", "meh", "normal", "neutral face", "casual", "bored", "expressionless"]
+        },
+        {
+            "value": "sad",
+            "keywords": ["sad", "down", "unhappy", "crying", "disappointed", "lonely", "gloomy", "tearful"]
+        },
+        {
+            "value": "anxious",
+            "keywords": ["anxious", "worried", "nervous", "uneasy", "stressed", "overwhelmed"]
+        },
+        {
+            "value": "numb",
+            "keywords": ["numb", "disconnected", "emotionless", "apathetic", "indifferent"]
+        },
+        {
+            "value": "confused",
+            "keywords": ["confused", "uncertain", "perplexed", "bewildered", "lost"]
+        },
+        {
+            "value": "grateful",
+            "keywords": ["grateful", "thankful", "appreciative", "blessed", "content"]
+        },
+        {
+            "value": "they need their bestf",
+            "keywords": ["needy", "missing", "needs attention"]
+        }
+
+    ],
+    "modifiers": ["reaction", "cartoon", "animation", "expression", "mood", "funny", "face"]
+}
