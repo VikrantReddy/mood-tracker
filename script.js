@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const accounts = [
         { username: 'Cookie', password: 'viksbestf' }, // Change to your desired username and password
         { username: 'Vikki', password: 'donttry' },  // Change to your desired username and password
-        { username: 'Dummy', password: 'thisisnotforyou'}
+        { username: 'NotDummy', password: 'thisisnotforyou'}
     ];
 
     // Expanded base keywords for each mood
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Modifiers to further increase diversity in search queries
-    const modifiers = ['disney character', 'cartoon', 'animation', 'kpop', 'hello kitty', 'funny'];
+    const modifiers = ['disney character', 'cartoon', 'animation', 'kpop', 'hello kitty'];
 
     // Function to fetch a random GIF for a dynamically generated search term
     function fetchGifForMood(mood, elementId) {
